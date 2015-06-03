@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  id="com.fiftyfive.fiftaghandler"
+  version="0.0.4">
+  <engines>
+    <engine name="cordova" version=">=3.0.0" />
+  </engines>
+
+  <name>FIFTagHandler</name>
+  <description>Plugin for FIFTagHandler Native SDKs (Android, iOS)</description>
+  <author>Med Hajlaoui</author>
+  <license>Apache 2.0</license>
+  <keywords>cordova,fifty,five,gtm,ga,tracking</keywords>
+  <repo>https://github.com/fiftyfivemobile/fiftaghandler-cordova-plugin</repo>
+
+  <js-module src="www/fiftaghandler.js" name="FIFTagHandler">
+    <clobbers target="navigator.fiftaghandler" />
+  </js-module>
+
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="FIFTagHandler">
+        <param name="ios-package" value="FIFTagHandlerPlugin" />
+      </feature>
+    </config-file>
+
+
+    <header-file src="ios/TAGContainer.h" />
+    <header-file src="ios/TAGContainerOpener.h" />
+    <header-file src="ios/TAGDataLayer.h" />
+    <header-file src="ios/TAGLogger.h" />
+    <header-file src="ios/TAGManager.h" />
+
+    <header-file src="ios/FIFTagHandlerPlugin.h" />
+    <source-file src="ios/FIFTagHandlerPlugin.m" />
+
+
+
+    <source-file src="ios/libGoogleAnalyticsServices.a" framework="true" />
+    <source-file src="ios/libAdIdAccess.a" framework="true" />
+    <framework src="ios/FacebookSDK.framework" custom="true" />
+    <framework src="ios/MobileAppTracker.framework" custom="true" />
+    <framework src="ios/FIFTagHandler.framework" custom="true" />
+
+    <resource-file src="container/GTM-K8JNVX"/>
+
+
+    <framework src="MobileCoreServices.framework" />
+    <framework src="iAd.framework" />
+    <framework src="CoreTelephony.framework" />
+    <framework src="SystemConfiguration.framework" />
+    <framework src="CoreData.framework" />
+    <framework src="AdSupport.framework" />
+    <framework src="libsqlite3.dylib" />
+    <framework src="libz.dylib" />
+  </platform>
+
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="FIFTagHandler">
+        <param name="android-package" value="com.fiftyfive.fiftaghandler.FIFTagHandlerPlugin" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    </config-file>
+
+    <source-file src="android/fiftaghandler.properties" target-dir="res/raw" />
+    <resource-file src="container/GTM-K8JNVX" target="res/raw/gtm_default_container" />
+
+
+    <source-file src="android/FIFTagHandlerPlugin.java" target-dir="src/com/fiftyfive/fiftaghandler/" />
+    <source-file src="android/google-play-services.jar" target-dir="libs" />
+    <source-file src="android/FIFTagHandler.jar" target-dir="libs" />
+    <source-file src="android/MobileAppTracker-3.4.2.jar" target-dir="libs" />
+    <source-file src="android/facebook.jar" target-dir="libs" />
+    <source-file src="android/bolts.jar" target-dir="libs" />
+    <source-file src="android/android-support-v4.jar" target-dir="libs" />
+    <source-file src="android/version.xml" target-dir="res/values" />
+
+    <proguard-config>
+-keep class * extends java.util.ListResourceBundle {
+protected Object[][] getContents();
+}
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+public static final *** NULL;
+}
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+@com.google.android.gms.common.annotation.KeepName *;
+}
+-keepnames class * implements android.os.Parcelable {
+public static final ** CREATOR;
+}
+    </proguard-config>
+  </platform>
+
+</plugin>
