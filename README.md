@@ -4,7 +4,6 @@ FIFTagHandler cordova plugin
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Getting started](#getting-started)
-* [Tracker reference](#tracker-reference)
 
 ## Introduction
 
@@ -53,8 +52,43 @@ Once the FIFTagHandler SDK is initialized, you can push events / data to the Goo
 ```js
 
 	// Push appStarted event to the DataLayer
-	fiftaghandler.push({'event': 'appStarted'});
+	fiftaghandler.push({'event': 'applicationStart'});
 
 ```
 
+#### Must read : order of push in fiftaghandler is important 
+
+When you push data to the dataLayer, it is very important that all values are set before the events. 
+
+For instance on a screen, when we asked for 
+- event:openScreen 
+- screenName : splashScreen 
+- userStatus : connected 
+
+You could implemented it like that : 
+
+######Good implementation sequence :
+
+In Google Tag Manager, the keys screenName and userStatus will be defined 
+```
+fiftaghandler.push(
+	{'event': 'applicationStart',
+	 'screenName': 'splashScreen',
+	 'userStatus' : 'connected'});
+```
+In Google Tag Manager, the keys screenName and userStatus will be defined 
+```
+fiftaghandler.push({'screenName': 'splashScreen'});
+fiftaghandler.push({'userStatus': 'connected'});
+fiftaghandler.push({'event': 'applicationStart'});
+```
+
+
+######Bad implementation sequence : 
+With this implementation, the keys screenName and userStatus won't be defined for the event 'applicationStart'
+```
+fiftaghandler.push({'event': 'applicationStart'});
+fiftaghandler.push({'screenName': 'splashScreen'});
+fiftaghandler.push({'userStatus': 'connected'});
+```
 
