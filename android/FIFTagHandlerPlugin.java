@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fiftyfive.tagHandler.FB.v3_14_1.FBFunctionCallTagHandler;
+import com.fiftyfive.tagHandler.GA.v3_0_0.GAFunctionCallMacroHandler;
+import com.fiftyfive.tagHandler.MAT.v3_4_2.MATFunctionCallTagHandler;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tagmanager.ContainerHolder;
@@ -110,7 +113,13 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
                     return;
                 }
 
-                FIFTagHandler.getInstance().register();
+                //manuel registering
+                MATFunctionCallTagHandler mat = new MATFunctionCallTagHandler();
+                mat.register(containerHolder.getContainer());
+                GAFunctionCallMacroHandler ga = new GAFunctionCallMacroHandler();
+                ga.register(containerHolder.getContainer());
+                FBFunctionCallTagHandler fb = new FBFunctionCallTagHandler();
+                fb.register(containerHolder.getContainer());
 
                 DataLayer dataLayer = FIFTagHandler.getInstance().getTagManager().getDataLayer();
 
