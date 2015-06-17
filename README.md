@@ -29,27 +29,6 @@ To install the FIFTagHandler plugin in your app, use the following command-line
 
 Once the FIFTagHandler plugin for cordova is installed, make sure to edit both iOS and Android projects to add the Facebook app id and the facebook app name. For more details, please follow instructions of the [Facebook documentation](https://developers.facebook.com/docs/)
 
-#### Configure the MAT SDK
-
-A more detailed documentation can be found [there](https://developers.mobileapptracking.com/android-sdk/)
-
-#### Manifest.xml
-
-Add the following sections to your AndroidManifest.xml file:
-
-```xml
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>	 	 
-<application ... >	 	 
-    <receiver android:name="com.mobileapptracker.Tracker">	 	 
-        <intent-filter>	 	 
-            <action android:name="com.android.vending.INSTALL_REFERRER" />	 	 
-        </intent-filter> 
-    </receiver>
-    <meta-data android:name="com.google.android.gms.version"
-               android:value="@integer/google_play_services_version" />
-</application>
-```
 
 #### progard 
 
