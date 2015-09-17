@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fiftyfive.tagHandler.FB.v3_14_1.FBFunctionCallTagHandler;
-import com.fiftyfive.tagHandler.GA.v3_0_0.GAFunctionCallMacroHandler;
+import com.fiftyfive.tagHandler.FB.v4_5_1.FBFunctionCallTagHandler;
+import com.fiftyfive.tagHandler.GA.v4_0_0.GAFunctionCallMacroHandler;
 import com.fiftyfive.tagHandler.MAT.v3_4_2.MATFunctionCallTagHandler;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
