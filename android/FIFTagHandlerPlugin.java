@@ -122,13 +122,19 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
                 fb.register(containerHolder.getContainer());
 
                 DataLayer dataLayer = FIFTagHandler.getInstance().getTagManager().getDataLayer();
+                GoogleAnalytics analytics = GoogleAnalytics.getInstance(FIFTagHandler.getInstance().getApplicationContext());
+                Tracker tracker = analytics.newTracker("UA-1111-1");
+                String cid = tracker.get("&cid");
 
                 // Push application start event
                 Map<String, Object> appStartMap = new HashMap<String, Object>();
                 appStartMap.put("event", "applicationStart");
+                appStartMap.put("userGoogleId",cid)
                 dataLayer.push(appStartMap);
             }
         }, 2, TimeUnit.SECONDS);
+        
+
     }
 
     private void setVerboseLoggingEnabled(){
@@ -153,7 +159,6 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
     }
     
 
-    
 
     private Map<String, Object> objectMap(JSONObject o) throws JSONException {
         if (o.length() == 0) {
