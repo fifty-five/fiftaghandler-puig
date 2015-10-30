@@ -12,6 +12,8 @@
 #import "TAGContainerOpener.h"
 #import "TAGManager.h"
 #import "TAGDataLayer.h"
+#import "GAIFields.h"
+#import "GAI.h"
 
 //FIFTagHandler
 #import <FIFTagHandler/FIFTagHandler.h>
@@ -22,29 +24,40 @@
 {
     CDVPluginResult* result = nil;
     NSString* containerId = [command.arguments objectAtIndex:0];
-    
+
     //GTM
     TAGManager *tagManager = [TAGManager instance];
-    
+
     [tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
     id<TAGContainerFuture> future = [TAGContainerOpener openContainerWithId:containerId
                                                                  tagManager:tagManager
                                                                    openType:kTAGOpenTypePreferFresh
                                                                     timeout:nil];
-    
-    
+
+
     TAGContainer *container = [future get];
     [container refresh];
-    
-    
+
+
     //FIFTagHandler
     [[FIFTagHandler sharedHelper].logger setLevel:kTAGLoggerLogLevelVerbose];
     [[FIFTagHandler sharedHelper] initTagHandlerWithManager:tagManager
                                                   container:container];
-    
-    
-    
+
+
+
+    // retrieve user Google id
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    NSString * clientID  = [tracker get:kGAIClientId];
+    if(clientID == NULL){
+        clientID = [[[GAI sharedInstance] trackerWithTrackingId:@"UA-1-1"] get:kGAIClientId];
+    }
+    NSLog(@"Google cid is %@",clientID);
+
+
     TAGDataLayer *dataLayer = [[FIFTagHandler sharedHelper] tagManager].dataLayer;
+    [dataLayer push:@{@"userGoogleId":clientID}];
+
 
     // Push applicationStart event
     [dataLayer push:@{@"event": @"applicationStart"}];
@@ -57,7 +70,7 @@
 {
     CDVPluginResult* result = nil;
     NSDictionary* params = [command.arguments objectAtIndex:0];
-    
+
     // Fetch the datalayer
     TAGDataLayer *dataLayer = [[FIFTagHandler sharedHelper] tagManager].dataLayer;
     if (!dataLayer) {
@@ -66,7 +79,7 @@
         [dataLayer push:params];
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:[command callbackId]];
 }
 

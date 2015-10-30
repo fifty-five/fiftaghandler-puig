@@ -37,6 +37,11 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.Iterator;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+import android.util.Log;
+
+
 public class FIFTagHandlerPlugin extends CordovaPlugin {
     
     private static TagManager tagManager;
@@ -122,13 +127,20 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
                 fb.register(containerHolder.getContainer());
 
                 DataLayer dataLayer = FIFTagHandler.getInstance().getTagManager().getDataLayer();
+                GoogleAnalytics analytics = GoogleAnalytics.getInstance(FIFTagHandler.getInstance().getApplicationContext());
+                Tracker tracker = analytics.newTracker("UA-1111-1");
+                String cid = tracker.get("&cid");
 
                 // Push application start event
                 Map<String, Object> appStartMap = new HashMap<String, Object>();
                 appStartMap.put("event", "applicationStart");
+                appStartMap.put("userGoogleId",cid);
+                Log.i("55", "Google id is" +cid);
                 dataLayer.push(appStartMap);
             }
         }, 2, TimeUnit.SECONDS);
+        
+
     }
 
     private void setVerboseLoggingEnabled(){
@@ -153,7 +165,6 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
     }
     
 
-    
 
     private Map<String, Object> objectMap(JSONObject o) throws JSONException {
         if (o.length() == 0) {
