@@ -24,8 +24,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tagmanager.ContainerHolder;
 import com.google.android.gms.tagmanager.DataLayer;
 import com.google.android.gms.tagmanager.TagManager;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -41,6 +39,8 @@ import java.util.Iterator;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import android.util.Log;
+
 
 public class FIFTagHandlerPlugin extends CordovaPlugin {
     
@@ -134,7 +134,8 @@ public class FIFTagHandlerPlugin extends CordovaPlugin {
                 // Push application start event
                 Map<String, Object> appStartMap = new HashMap<String, Object>();
                 appStartMap.put("event", "applicationStart");
-                appStartMap.put("userGoogleId",cid)
+                appStartMap.put("userGoogleId",cid);
+                Log.i("55", "Google id is" +cid);
                 dataLayer.push(appStartMap);
             }
         }, 2, TimeUnit.SECONDS);
