@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
   id="com.fiftyfive.fiftaghandler"
-  version="0.0.6">
+  version="0.0.7">
   <engines>
     <engine name="cordova" version=">=3.0.0" />
   </engines>
@@ -31,6 +31,16 @@
     <header-file src="ios/TAGDataLayer.h" />
     <header-file src="ios/TAGLogger.h" />
     <header-file src="ios/TAGManager.h" />
+    <header-file src="ios/GAI.h" />
+    <header-file src="ios/GAIFields.h" />
+    <header-file src="ios/GAILogger.h" />
+    <header-file src="ios/GAITracker.h" />
+    <header-file src="ios/GAIEcommerceFields.h" />
+    <header-file src="ios/GAIDictionaryBuilder.h" />
+    <header-file src="ios/GAIEcommerceProduct.h" />
+    <header-file src="ios/GAIEcommerceProductAction.h" />
+    <header-file src="ios/GAIEcommercePromotion.h" />
+    <header-file src="ios/GAITrackedViewController.h" />
 
     <header-file src="ios/FIFTagHandlerPlugin.h" />
     <source-file src="ios/FIFTagHandlerPlugin.m" />
@@ -68,10 +78,10 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-         <receiver android:name="com.mobileapptracker.Tracker">       
-        <intent-filter>      
-            <action android:name="com.android.vending.INSTALL_REFERRER" />       
-        </intent-filter> 
+         <receiver android:name="com.mobileapptracker.Tracker">
+        <intent-filter>
+            <action android:name="com.android.vending.INSTALL_REFERRER" />
+        </intent-filter>
     </receiver>
     </config-file>
 
